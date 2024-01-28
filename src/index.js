@@ -2,7 +2,8 @@
 import express from 'express';
 import path from 'path';
 import {fileURLToPath} from 'url';
-import { deleteItem, getItemByID, getItems, postItem, putItem } from './items.mjs';
+import {deleteItem, getItemByID, getItems, postItem, putItem} from './items.mjs';
+import {getUserById, getUsers, postUser, postLogin, putUser} from './users.mjs';
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -20,44 +21,31 @@ const __dirname = path.dirname(__filename);
 app.use('/sivusto', express.static(path.join(__dirname, '../public')));
 
 
+// RESOURCE /item endpoints
 // GET http://127.0.0.1:3000/items
 app.get('/items', getItems);
-
 // GET http://127.0.0.1:3000/items/<ID>
 app.get('/items/:id', getItemByID);
-
-// POST http://127.0.0.1:3000/items/ (itemin lisääys)
+// POST http://127.0.0.1:3000/items/ (Itemin lisäys)
 app.post('/items', postItem);
-
-// DELETE http://127.0.0.1.3000/items
-app.delete('/items:id', deleteItem);
-
-//PUT
+// PUT
 app.put('/items/:id', putItem);
+// DELETE
+app.delete('/items/:id', deleteItem);
 
 
+// Users resource
+// list users
+app.get('/users', getUsers);
+// get info of a user
+app.get('/users/:id', getUserById);
 
-
-// // Itemin lisäys
-// // POST http://127.0.0.1:3000/items/
-// app.post('/items', (req, res) => {
-//   // TODO (vapaaehtonen, jatketaan tästä ens kerralla): lisää postattu item items-taulukkoon
-//   // Esimerkki: Oletetaan, että pyynnössä on JSON-muodossa oleva objekti
-//   const newItem = req.body;
-
-//   if (newItem && newItem.name) {
-//     // Luodaan uniikki id uudelle itemille
-//     const newId = items.length + 1;
-//     const itemWithId = { id: newId, name: newItem.name };
-
-//     // Lisätään uusi item items-taulukkoon
-//     items.push(itemWithId);
-
-//     res.json({ message: 'Item created', item: itemWithId });
-//   } else {
-//     res.status(400).json({ message: 'Invalid item data' });
-//   }
-// });
+// user registration
+app.post('/users', postUser);
+// user login
+app.post('/users/login', postLogin);
+// update user
+app.put('/users/:id', putUser);
 
 
 // GET http://127.0.0.1:3000

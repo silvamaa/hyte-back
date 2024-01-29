@@ -32,52 +32,18 @@ const users = [
     res.json(user);
   };
 
-
-
-
-
-
   const postUser = (req, res) => {
-    console.log('postUser request body', req.body);
-    const { username, password, email } = req.body;
-    if (!username || !password || !email) {
-      return res.status(400).json({ error: 'username, password, or email missing' });
-    }
-    const newUser = {
-      id: users.length + 1,
-      username,
-      password,
-      email
-    };
-    users.push(newUser);
-    res.status(201).json({ message: 'user created', user: newUser });
+    const userData = req.body;
+    console.log('Creating user:', userData);
+    res.status(201).json({ message: 'User created successfully', user: userData });
   };
 
   const putUser = (req, res) => {
-    const userId = parseInt(req.params.id);
-    const { username, password, email } = req.body;
-    const userIndex = users.findIndex(user => user.id === userId);
-    if (userIndex === -1) {
-      return res.status(404).json({ error: "User not found" });
-    }
-    if (!username && !password && !email) {
-      return res.status(400).json({ error: "No fields provided for update" });
-    }
-    if (username) {
-      users[userIndex].username = username;
-    }
-    if (password) {
-      users[userIndex].password = password;
-    }
-    if (email) {
-      users[userIndex].email = email;
-    }
-    res.json({ message: 'User updated successfully', user: users[userIndex] });
+    const userId = req.params.userId;
+    const updatedUserData = req.body;
+    console.log('Updating user with ID', userId, 'to:', updatedUserData);
+    res.status(200).json({ message: 'User updated successfully', user: updatedUserData });
   };
-
-
-
-
 
 
   // Dummy login, returns user object if username & password match

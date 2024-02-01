@@ -33,10 +33,16 @@ const users = [
   };
 
   const postUser = (req, res) => {
-    const userData = req.body;
-    console.log('Creating user:', userData);
-    res.status(201).json({ message: 'User created successfully', user: userData });
-  };
+    const newUser = req.body;
+    if (!newUser.username || !newUser.password || !newUser.email) {
+      returnres.status(400).send('Missing information');
+    }
+
+    const userId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1;
+    const userToAdd = {id: userId, ...newUser};
+    user.putUser(userToAdd);
+    res.status(201).json(userToAdd);
+    };
 
   const putUser = (req, res) => {
     const userId = req.params.userId;

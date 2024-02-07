@@ -35,21 +35,22 @@ const users = [
   const postUser = (req, res) => {
     const newUser = req.body;
     if (!newUser.username || !newUser.password || !newUser.email) {
-      returnres.status(400).send('Missing information');
+      return res.status(400).send('Missing information');
     }
 
-    const userId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1;
+    const userId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
     const userToAdd = {id: userId, ...newUser};
-    user.putUser(userToAdd);
+    users.push(userToAdd);
     res.status(201).json(userToAdd);
-    };
+};
 
-  const putUser = (req, res) => {
+const putUser = (req, res) => {
     const userId = req.params.userId;
     const updatedUserData = req.body;
     console.log('Updating user with ID', userId, 'to:', updatedUserData);
     res.status(200).json({ message: 'User updated successfully', user: updatedUserData });
-  };
+};
+
 
 
   // Dummy login, returns user object if username & password match

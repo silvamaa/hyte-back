@@ -19,6 +19,11 @@ const users = [
     }
   ];
 
+
+  //TODO: use userModel (db) intead of mock data
+  //TODO: implement route handlers below for users (real data)
+
+
   const getUsers = (req, res) => {
     res.json(users);
   };
@@ -50,7 +55,6 @@ const putUser = (req, res) => {
     console.log('Updating user with ID', userId, 'to:', updatedUserData);
     res.status(200).json({ message: 'User updated successfully', user: updatedUserData });
 };
-
 
 
   // Dummy login, returns user object if username & password match

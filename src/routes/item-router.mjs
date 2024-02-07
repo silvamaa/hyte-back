@@ -4,7 +4,7 @@ import {deleteItem, getItemByID, getItems, postItem, putItem} from '../controlle
 const itemRouter = express.Router();
 
 
-//define routes here
+//items endpoints
 // GET http://127.0.0.1:3000/items
 itemRouter.get('/', getItems);
 // GET http://127.0.0.1:3000/items/<ID>

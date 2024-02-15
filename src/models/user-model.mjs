@@ -1,10 +1,11 @@
+/* eslint-disable linebreak-style */
 import promisePool from '../utils/database.mjs';
 
 const listAllUsers = async () => {
   try {
     const sql = 'SELECT user_id, username, user_level FROM Users';
     const [rows] = await promisePool.query(sql);
-    //console.log(rows);
+    // console.log(rows);
     return rows;
   } catch (error) {
     console.error('listAllUsers', error);
@@ -17,7 +18,7 @@ const selectUserById = async (id) => {
     const sql = 'SELECT * FROM Users WHERE user_id=?';
     const params = [id];
     const [rows] = await promisePool.query(sql, params);
-    //console.log(rows);
+    // console.log(rows);
     // if nothing is found with the user id, result array is empty []
     if (rows.length === 0) {
       return {error: 404, message: 'user not found'};
@@ -33,10 +34,11 @@ const selectUserById = async (id) => {
 
 const insertUser = async (user) => {
   try {
-    const sql = 'INSERT INTO Users (username, password, email) VALUES (?, ?, ?)';
+    const sql =
+      'INSERT INTO Users (username, password, email) VALUES (?, ?, ?)';
     const params = [user.username, user.password, user.email];
     const [result] = await promisePool.query(sql, params);
-    //console.log(result);
+    // console.log(result);
     return {message: 'new user created', user_id: result.insertId};
   } catch (error) {
     // now duplicate entry error is generic 500 error, should be fixed to 400 ?
@@ -47,7 +49,8 @@ const insertUser = async (user) => {
 
 const updateUserById = async (user) => {
   try {
-    const sql = 'UPDATE Users SET username=?, password=?, email=? WHERE user_id=?';
+    const sql =
+      'UPDATE Users SET username=?, password=?, email=? WHERE user_id=?';
     const params = [user.username, user.password, user.email, user.user_id];
     const [result] = await promisePool.query(sql, params);
     console.log(result);
@@ -77,4 +80,32 @@ const deleteUserById = async (id) => {
   }
 };
 
-export {listAllUsers, selectUserById, insertUser, updateUserById, deleteUserById};
+// Used for login
+const selectUserByUsername = async (username, password) => {
+  try {
+    const sql = 'SELECT * FROM Users WHERE username=?';
+    const params = [username];
+    const [rows] = await promisePool.query(sql, params);
+    //console.log(rows);
+    // if nothing is found with the username and password, login attempt has failed
+    if (rows.length === 0) {
+      return {error: 401, message: 'invalid username or password'};
+    }
+    // Otherwise, remove password property from the result and return the user object
+    delete rows[0].password;
+    return rows[0];
+  } catch (error) {
+    console.error('selectUserByNameAndPassword', error);
+    return {error: 500, message: 'db error'};
+  }
+};
+
+// eslint-disable-next-line max-len
+export {
+  listAllUsers,
+  selectUserById,
+  insertUser,
+  updateUserById,
+  deleteUserById,
+  selectUserByUsername,
+};

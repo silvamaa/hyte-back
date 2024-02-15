@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 // Note: db functions are async and must be called with await from the controller
 import promisePool from '../utils/database.mjs';
 
@@ -9,6 +10,18 @@ const listAllEntries = async () => {
   } catch (e) {
     console.error('error', e.message);
     return {error: e.message};
+  }
+};
+
+const listAllEntriesByUserId = async (userId) => {
+  try {
+    const sql = 'SELECT * FROM DiaryEntries WHERE user_id = ?';
+    const params = [userId];
+    const [rows] = await promisePool.query(sql, params);
+    return rows;
+  } catch (error) {
+    console.error('Error:', error.message);
+    return { error: error.message };
   }
 };
 
@@ -80,6 +93,7 @@ const deleteEntryById = async (id) => {
 
 export {
   listAllEntries,
+  listAllEntriesByUserId,
   findEntryById,
   addEntry,
   updateEntryById,

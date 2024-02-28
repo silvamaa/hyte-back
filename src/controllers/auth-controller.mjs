@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import {selectUserByUsername} from "../models/user-model.mjs";
 import 'dotenv/config';
+import {selectUserByUsername} from '../models/user-model.mjs';
 
 // INSECURE LOGIN uses harcoded passwords only
 // returns user object if username & password match
@@ -12,7 +12,7 @@ const postLogin = async (req, res) => {
   if (user.error) {
     return res.status(user.error).json(user);
   }
-  // compare password and hash, if match login succesful
+  // compare password and hash, if match, login successful
   const match = await bcrypt.compare(password, user.password);
   if (match) {
     delete user.password;
@@ -20,8 +20,8 @@ const postLogin = async (req, res) => {
     return res.json({message: 'logged in successfully', user, token});
   } else {
     return res
-    .status(401)
-    .json({error: 401, message: 'invalid username or password'});
+      .status(401)
+      .json({error: 401, message: 'invalid username or password'});
   }
 };
 

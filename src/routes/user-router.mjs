@@ -8,10 +8,12 @@ import {
 } from '../controllers/user-controller.mjs';
 import {authenticateToken} from '../middlewares/authentication.mjs';
 
+// eslint-disable-next-line new-cap
 const userRouter = express.Router();
 
 // /user endpoint
 userRouter
+  // eslint-disable-next-line indent
   .route('/')
   // list users
   .get(authenticateToken, getUsers)

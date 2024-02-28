@@ -4,11 +4,13 @@ import {
   addEntry,
   deleteEntryById,
   updateEntryById,
+  listAllEntriesByUserId,
 } from '../models/entry-model.mjs';
 
 const getEntries = async (req, res) => {
-  const userId = req.user.user_id;
-  const result = await listAllEntriesByUserId();
+  // return only logged in user's own entries
+  // - get user's id from token (req.user.user_id)
+  const result = await listAllEntriesByUserId(req.user.user_id);
   if (!result.error) {
     res.json(result);
   } else {

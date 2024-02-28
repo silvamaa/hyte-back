@@ -1,11 +1,10 @@
-/* eslint-disable linebreak-style */
-import promisePool from '../utils/database.mjs';
+import promisePool from '../utils/database.mjs';console.log
 
 const listAllUsers = async () => {
   try {
     const sql = 'SELECT user_id, username, user_level FROM Users';
     const [rows] = await promisePool.query(sql);
-    // console.log(rows);
+    //console.log(rows);
     return rows;
   } catch (error) {
     console.error('listAllUsers', error);
@@ -53,7 +52,7 @@ const updateUserById = async (user) => {
       'UPDATE Users SET username=?, password=?, email=? WHERE user_id=?';
     const params = [user.username, user.password, user.email, user.user_id];
     const [result] = await promisePool.query(sql, params);
-    console.log(result);
+    // console.log(result);
     return {message: 'user data updated', user_id: user.user_id};
   } catch (error) {
     // fix error handling
@@ -68,7 +67,7 @@ const deleteUserById = async (id) => {
     const sql = 'DELETE FROM Users WHERE user_id=?';
     const params = [id];
     const [result] = await promisePool.query(sql, params);
-    console.log(result);
+    // console.log(result);
     if (result.affectedRows === 0) {
       return {error: 404, message: 'user not found'};
     }
@@ -81,18 +80,16 @@ const deleteUserById = async (id) => {
 };
 
 // Used for login
-const selectUserByUsername = async (username, password) => {
+const selectUserByUsername = async (username) => {
   try {
     const sql = 'SELECT * FROM Users WHERE username=?';
     const params = [username];
     const [rows] = await promisePool.query(sql, params);
-    //console.log(rows);
-    // if nothing is found with the username and password, login attempt has failed
+    // console.log(rows);
+    // if nothing is found with the username, login attempt has failed
     if (rows.length === 0) {
       return {error: 401, message: 'invalid username or password'};
     }
-    // Otherwise, remove password property from the result and return the user object
-    delete rows[0].password;
     return rows[0];
   } catch (error) {
     console.error('selectUserByNameAndPassword', error);
@@ -100,7 +97,6 @@ const selectUserByUsername = async (username, password) => {
   }
 };
 
-// eslint-disable-next-line max-len
 export {
   listAllUsers,
   selectUserById,

@@ -32,13 +32,13 @@ body: {"name": "New Item"}
 Example queries:
 
 ```http
-# Get all users
+# Get all users (requires token)
 GET http://127.0.0.1:3000/users
 
-# Get user by id
+# Get user by id (requires token)
 GET http://127.0.0.1:3000/users/:id
 
-# Delete user
+# Delete user (requires token)
 DELETE http://127.0.0.1:3000/users/:id
 
 # Create user
@@ -51,8 +51,8 @@ content-type: application/json
   "email": "update4@example.com"
 }
 
-# Update user
-PUT http://127.0.0.1:3000/users/:id
+# Update user's own data (requires token)
+PUT http://127.0.0.1:3000/users/
 content-type: application/json
 
 {
@@ -77,7 +77,7 @@ content-type: application/json
 Example queries:
 
 ```http
-# Get all entries
+# Get all entries for a logged in user (requires token)
 GET http://localhost:3000/api/entries
 
 # Get entries by id

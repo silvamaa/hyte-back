@@ -31,9 +31,20 @@ const authRouter = express.Router();
  *    }
  */
 
+/**
+ * @apiDefine InvalidTokenError
+ * @apiError InvalidToken Authentication token was invalid.
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 401 Unauthorized
+ *     {
+ *       "message": "invalid token",
+ *       "status": 401
+ *     }
+ */
+
 authRouter
   /**
-   * @api {post} /login Login
+   * @api {post} /auth/login Login
    * @apiVersion 1.0.0
    * @apiName PostLogin
    * @apiGroup Authentication
@@ -78,7 +89,38 @@ authRouter
     validationErrorHandler,
     postLogin,
   )
-  // get user info
+  /**
+   * @api {get} /auth/me Request information about current user
+   * @apiVersion 1.0.0
+   * @apiName GetMe
+   * @apiGroup Authentication
+   * @apiPermission token
+   * @apiHeader {String} Authorization Bearer token.
+   *
+   * @apiSuccess {Object} user User info.
+   * @apiSuccess {Number} user.user_id Id of the User.
+   * @apiSuccess {String} user.username Username of the User.
+   * @apiSuccess {String} user.email email of the User.
+   * @apiSuccess {Date} user.created_at User creation time.
+   * @apiSuccess {String} user.user_level User level of the User.
+   * @apiSuccess {Number} user.iat Token creation timestamp.
+   * @apiSuccess {Number} user.exp Token expiration timestamp.
+   *
+   * @apiSuccessExample Success-Response:
+   * HTTP/1.1 200 OK
+   * {
+   *   "user": {
+   *     "user_id": 18,
+   *     "username": "johnjane",
+   *     "email": "johnjane@example.com",
+   *     "created_at": "2024-03-07T12:45:51.000Z",
+   *     "user_level": "regular",
+   *     "iat": 1709887124,
+   *     "exp": 1709973524
+   *   }
+   * }
+   * @apiUse InvalidTokenError
+   */
   .get('/me', authenticateToken, getMe);
 
 export default authRouter;

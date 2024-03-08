@@ -15,7 +15,22 @@ const userRouter = express.Router();
 // /api/user endpoint
 userRouter
   .route('/')
-  // list users
+  /**
+   * @api {get} /users Request user list
+   * @apiName GetUsers
+   * @apiGroup Users
+   * @apiPermission token
+   *
+   * @apiSuccess {Array} user[] array of Users.
+   * @apiSuccess {Object} user User object.
+   * @apiSuccess {Number} user.user_id Id of the user.
+   * @apiSuccess {String} user.username Username
+   * @apiSuccess {String} user.user_level Userlevel of the User.
+   *
+   * TODO: add example response
+   *
+   * @apiUse InvalidTokenError
+   */
   .get(authenticateToken, getUsers)
   // update user
   .put(

@@ -16,9 +16,7 @@ CREATE TABLE Users (
 CREATE TABLE DiaryEntries (
     entry_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    entry_date DATE NOT NULL,
     mood VARCHAR(50),
-    weight DECIMAL(5,2),
     sleep_hours INT,
     notes TEXT,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

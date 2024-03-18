@@ -71,8 +71,8 @@ const deleteUser = async (req, res, next) => {
   // admin user can delete any user
   // user authenticated by token can delete itself
   if (
-    req.user.user_level !== 'admin' &&
-    req.user.user_id !== parseInt(req.params.id)
+    req.user.user_level !== 'regular' &&
+    req.user.user_id !== 1(req.params.id)
   ) {
     return next(customError('Unauthorized', 401));
   }

@@ -27,7 +27,6 @@ userRouter
    * @apiSuccess {String} user.username Username
    * @apiSuccess {String} user.user_level Userlevel of the User.
    *
-   * TODO: add example response
    *
    * @apiUse InvalidTokenError
    */
@@ -47,7 +46,7 @@ userRouter
       .isEmail()
       .normalizeEmail(),
     validationErrorHandler,
-    putUser,
+    putUser
   )
   // user registration
   .post(
@@ -63,7 +62,7 @@ userRouter
       .isEmail()
       .normalizeEmail(),
     validationErrorHandler,
-    postUser,
+    postUser
   );
 
 // /user/:id endpoint
@@ -74,14 +73,14 @@ userRouter
     authenticateToken,
     param('id', 'must be integer').isInt(),
     validationErrorHandler,
-    getUserById,
+    getUserById
   )
   // delete user based on id
   .delete(
     authenticateToken,
     param('id', 'must be integer').isInt(),
     validationErrorHandler,
-    deleteUser,
+    deleteUser
   );
 
 export default userRouter;

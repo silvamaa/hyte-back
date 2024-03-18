@@ -12,9 +12,9 @@ In this ReadMe you'll understand the basics of the API server on how it's works 
 ![index.html] (/readme-pics/index.png)
 
 `trackingg.html`
-![trackingg.html] (/readme-pics/mood-form.png)
-![trackingg.html] (/readme-pics/entries.png)
-![trackingg.html] (/readme-pics/update-entry.png)
+![trackingg.html] (readme-pics/mood-form.png)
+![trackingg.html] (readme-pics/entries.png)
+![trackingg.html] (readme-pics/update-entry.png)
 
 `user.html`
 ![user.html] (/readme-pics/users.png)

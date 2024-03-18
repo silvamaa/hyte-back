@@ -4,11 +4,32 @@ This project is made for the individual project for Web-dev class in Metropolia.
 
 In this ReadMe you'll understand the basics of the API server on how it's works and what type of functions you can do.
 
+<!--  -->
+
 ## Screenshots
+
+`index.html`
+![index.html] (/readme-pics/index.png)
+
+`trackingg.html`
+![trackingg.html] (/readme-pics/mood-form.png)
+![trackingg.html] (/readme-pics/entries.png)
+![trackingg.html] (/readme-pics/update-entry.png)
+
+`user.html`
+![user.html] (/readme-pics/users.png)
+![user.html] (/readme-pics/user-info.png)
+
+`about-us.html`
+![about-us.html] (/readme-pics/about-us.png)
+
+<!--  -->
 
 ## Apidoc
 
-[Documentation](https://linktodocumentation)
+Didn't successfully get Apidoc working. Overall documentation can be found in the code itself.
+
+<!--  -->
 
 # Endpoints
 
@@ -82,3 +103,6 @@ Delete user (requires token)
 DELETE http://127.0.0.1:3000/api/users/:id
 Authorization: Bearer <token>
 ```
+
+<!--  -->
+

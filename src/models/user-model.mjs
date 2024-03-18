@@ -1,7 +1,5 @@
-/**
- * list all users in the database
- * @returns {object[]} an array of user objects
- */
+import promisePool from '../utils/database.mjs';
+
 const listAllUsers = async () => {
   try {
     const sql = 'SELECT user_id, username, user_level FROM Users';
@@ -13,12 +11,6 @@ const listAllUsers = async () => {
     return {error: 500, message: 'db error'};
   }
 };
-
-/**
- * get a user by their id
- * @param {number} id the user id
- * @returns {object} the user object or an error
- */
 const selectUserById = async (id) => {
   try {
     const sql = 'SELECT * FROM Users WHERE user_id=?';
@@ -37,33 +29,22 @@ const selectUserById = async (id) => {
     return {error: 500, message: 'db error'};
   }
 };
-
-/**
- * create a new user
- * @param {object} user the user object
- * @param {function} next the error handler function
- * @returns {object} the new user object or an error
- */
 const insertUser = async (user, next) => {
   try {
-    const sql = 'INSERT INTO Users (username, password, email) VALUES (?,?,?)';
+    const sql =
+      'INSERT INTO Users (username, password, email) VALUES (?, ?, ?)';
     const params = [user.username, user.password, user.email];
     const [result] = await promisePool.query(sql, params);
     // console.log(result);
     return {message: 'new user created', user_id: result.insertId};
   } catch (error) {
-    // now duplicate entry error is generic 500 error, should be fixed to 400?
+    // now duplicate entry error is generic 500 error, should be fixed to 400 ?
     console.error('insertUser', error);
     // Error handler can be used directly from model, if next function is passed
     return next(new Error(error));
   }
 };
 
-/**
- * update an existing user
- * @param {object} user the user object
- * @returns {object} the updated user object or an error
- */
 const updateUserById = async (user) => {
   try {
     const sql =
@@ -74,17 +55,11 @@ const updateUserById = async (user) => {
     console.log(result);
     return {message: 'user data updated', user_id: user.userId};
   } catch (error) {
-    // now duplicate entry error is generic 500 error, should be fixed to 400?
+    // now duplicate entry error is generic 500 error, should be fixed to 400 ?
     console.error('updateUserById', error);
     return {error: 500, message: 'db error'};
   }
 };
-
-/**
- * delete an existing user
- * @param {number} id the user id
- * @returns {object} the deleted user object or an error
- */
 const deleteUserById = async (id) => {
   try {
     const sql = 'DELETE FROM Users WHERE user_id=?';
@@ -102,11 +77,7 @@ const deleteUserById = async (id) => {
   }
 };
 
-/**
- * get a user by their username
- * @param {string} username the username
- * @returns {object} the user object or an error
- */
+// Used for login
 const selectUserByUsername = async (username) => {
   try {
     const sql = 'SELECT * FROM Users WHERE username=?';

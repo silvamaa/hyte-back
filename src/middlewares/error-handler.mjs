@@ -1,67 +1,73 @@
-/**
- * Custom error generator
- * @param {string} message - error message
- * @param {number} [status] - optional error status, default is 500
- * @param {array} [errors] - optional array of error objects
- * @return {object} error object
- */
-const customError = (message, status, errors) => {
-  const error = new Error(message);
-  error.status = status || 500;
-  if (errors) {
-    error.errors = errors;
+import bcrypt from 'bcryptjs';
+import {
+  deleteUserById,
+  insertUser,
+  listAllUsers,
+  selectUserById,
+  updateUserById,
+} from '../models/user-model.mjs';
+import {customError} from '../middlewares/error-handler.mjs';
+
+const getUsers = async (req, res, next) => {
+  const result = await listAllUsers();
+  if (result.error) {
+    return next(customError(result, result.error));
   }
-  return error;
+  return res.json(result);
 };
-
-/**
- * Generic 404 handler
- * @param {object} req - request object
- * @param {object} res - response object
- * @param {function} next - next function
- */
-const notFoundHandler = (req, res, next) => {
-  const error = customError(`Not Found - ${req.originalUrl}`, 404);
-  next(error); // forward error to error handler
+const getUserById = async (req, res, next) => {
+  const result = await selectUserById(req.params.id);
+  if (result.error) {
+    return next(customError(result, result.error));
+  }
+  return res.json(result);
 };
-
-/**
- * Custom default middleware for handling errors
- * @param {object} err - error object
- * @param {object} req - request object
- * @param {object} res - response object
- * @param {function} next - next function
- */
-const errorHandler = (err, req, res, next) => {
-  res.status(err.status || 500); // default is 500 if err.status is not defined
-  console.log('errorHandler', err.message, err.status, err.errors);
-  res.json({
-    error: {
-      message: err.message,
-      status: err.status || 500,
-      errors: err.errors,
+const postUser = async (req, res, next) => {
+  const {username, password, email} = req.body;
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  const result = await insertUser(
+    {
+      username,
+      email,
+      password: hashedPassword,
     },
+    next
+  );
+  return res.status(201).json(result);
+};
+const putUser = async (req, res, next) => {
+  // Get userinfo from req.user object extracted from token
+  // Only user authenticated by token can update own data
+  // TODO: admin user can update any user (incl. user_level)
+  const userId = req.user.user_id;
+  const {username, password, email} = req.body;
+  // hash password if included in request
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  const result = await updateUserById({
+    userId,
+    username,
+    password: hashedPassword,
+    email,
   });
-};
-
-/**
- * Custom middleware for handling and formatting validation errors
- * @param {object} req - request object
- * @param {object} res - response object
- * @param {function} next - next function
- * @return {*} next function call
- */
-const validationErrorHandler = (req, res, next) => {
-  const errors = validationResult(req, {strictParams: ['body']});
-  if (!errors.isEmpty()) {
-    // console.log('validation errors', errors.array({onlyFirstError: true}));
-    const error = customError('Bad Request', 400);
-    error.errors = errors.array({onlyFirstError: true}).map((error) => {
-      return {field: error.path, message: error.msg};
-    });
-    return next(error);
+  if (result.error) {
+    return next(customError(result, result.error));
   }
-  next();
+  return res.status(200).json(result);
+};
+const deleteUser = async (req, res, next) => {
+  try {
+    // Check user's authorization here if needed
+    const result = await deleteUserById(req.params.id);
+    if (result.error) {
+      return next(customError(result, result.error));
+    }
+    return res.json(result);
+  } catch (error) {
+    console.error('Error deleting user: ', error);
+    return next(customError('Internal server error', 500));
+  }
 };
 
-export {customError, notFoundHandler, errorHandler, validationErrorHandler};
+export {getUsers, getUserById, postUser, putUser, deleteUser};

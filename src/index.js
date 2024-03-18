@@ -9,9 +9,8 @@ import cors from 'cors';
 import logger from './middlewares/logger.mjs';
 import authRouter from './routes/auth-router.mjs';
 import {errorHandler, notFoundHandler} from './middlewares/error-handler.mjs';
-const link = 'hyte-server.northeurope.cloudapp.azure.com'
-// const hostname = '127.0.0.1';
-// const port = 3001;
+const hostname = '127.0.0.1';
+const port = 3001;
 const app = express();
 
 // middleware, joka lisää CORS-otsakkeen jokaiseen lähtevään vastaukseen.
@@ -56,5 +55,5 @@ app.use(errorHandler);
 
 // Start the server
 app.listen(link, () => {
-  console.log(`Server running at hyte-server.northeurope.cloudapp.azure.com`);
+  console.log(`Server running at localhost: ${hostname}:${port}`);
 });

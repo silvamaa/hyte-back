@@ -1,7 +1,7 @@
 {
   "name": "back-end-hyte",
   "version": "1.0.0",
-  "description": "Example REST API server",
+  "description": "Individual project REST API server",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -11,8 +11,8 @@
     "apidoc": "apidoc -i src/ -o docs/"
   },
   "apidoc": {
-    "title": "My API docs",
-    "url": "https://hyte-server.northeurope.cloudapp.azure.com/docs",
+    "title": "Vital Track documentation.",
+    "url": "https://example.com/api",
     "order": [
       "Authentication",
       "User"

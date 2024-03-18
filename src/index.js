@@ -54,6 +54,6 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 // Start the server
-app.listen(hostname, port, () => {
-  console.log(`Server running at localhost: ${hostname}:${port}`);
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });

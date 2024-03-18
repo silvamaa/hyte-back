@@ -31,7 +31,7 @@ Didn't successfully get Apidoc working. Overall documentation can be found in th
 
 <!--  -->
 
-# Endpoints
+## Endpoints
 
 ### Mood Form
 
@@ -106,3 +106,25 @@ Authorization: Bearer <token>
 
 <!--  -->
 
+## Links
+
+### App
+[Vital Track](https://hyte-server.northeurope.cloudapp.azure.com)
+
+### Git
+[Front End](https://github.com/silvamaa/vite/tree/porjekti/vite-project)
+[Back End](https://github.com/silvamaa/hyte-back/tree/projekti)
+
+<!--  -->
+
+## Database
+
+### Structure
+![db](/readme-pics/VitalTrack-db-structure.png)
+
+<!--  -->
+
+## Bug / Problems
+
+- Logout button visuals.
+- About us full of not correct info since it was made mainly for visuals.

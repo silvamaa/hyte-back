@@ -9,19 +9,19 @@ In this ReadMe you'll understand the basics of the API server on how it's works 
 ## Screenshots
 
 `index.html`
-![index.html] (/readme-pics/index.png)
+![index.html](/readme-pics/index.png)
 
 `trackingg.html`
-![trackingg.html] (readme-pics/mood-form.png)
-![trackingg.html] (readme-pics/entries.png)
-![trackingg.html] (readme-pics/update-entry.png)
+![trackingg.html](/readme-pics/mood-form.png)
+![trackingg.html](/readme-pics/entries.png)
+![trackingg.html](/readme-pics/update-entry.png)
 
 `user.html`
-![user.html] (/readme-pics/users.png)
-![user.html] (/readme-pics/user-info.png)
+![user.html](/readme-pics/users.png)
+![user.html](/readme-pics/user-info.png)
 
 `about-us.html`
-![about-us.html] (/readme-pics/about-us.png)
+![about-us.html](/readme-pics/about-us.png)
 
 <!--  -->
 

@@ -1,4 +1,5 @@
 import promisePool from '../utils/database.mjs';
+
 const listAllEntries = async () => {
   try {
     const [rows] = await promisePool.query('SELECT * FROM DiaryEntries');
@@ -9,6 +10,7 @@ const listAllEntries = async () => {
     return {error: e.message};
   }
 };
+
 const listAllEntriesByUserId = async (id) => {
   try {
     const sql = 'SELECT * FROM DiaryEntries WHERE user_id=?';
@@ -21,11 +23,12 @@ const listAllEntriesByUserId = async (id) => {
     return {error: e.message};
   }
 };
+
 const findEntryById = async (id, userId) => {
   try {
     const [rows] = await promisePool.query(
       'SELECT * FROM DiaryEntries WHERE entry_id = ? AND user_id = ?',
-      [id, userId]
+      [id, userId],
     );
     // console.log('rows', rows);
     return rows[0];
@@ -34,11 +37,19 @@ const findEntryById = async (id, userId) => {
     return {error: e.message};
   }
 };
+
 const addEntry = async (entry, userId) => {
   const sql = `INSERT INTO DiaryEntries
-               (user_id, mood, sleep_hours, notes)
-               VALUES (?, ?, ?, ?)`;
-  const params = [userId, entry.mood, entry.sleep_hours, entry.notes];
+               (user_id, entry_date, mood, weight, sleep_hours, notes)
+               VALUES (?, ?, ?, ?, ?, ?)`;
+  const params = [
+    userId,
+    entry.entry_date,
+    entry.mood,
+    entry.weight,
+    entry.sleep_hours,
+    entry.notes,
+  ];
   try {
     const rows = await promisePool.query(sql, params);
     // console.log('rows', rows);
@@ -48,6 +59,7 @@ const addEntry = async (entry, userId) => {
     return {error: e.message};
   }
 };
+
 const updateEntryById = async (entryId, userId, entryData) => {
   try {
     const params = [entryData, entryId, userId];
@@ -56,7 +68,7 @@ const updateEntryById = async (entryId, userId, entryData) => {
     const sql = promisePool.format(
       `UPDATE DiaryEntries SET ?
        WHERE entry_id=? AND user_id=?`,
-      params
+      params,
     );
     const [result] = await promisePool.query(sql, params);
     // console.log(result);
@@ -71,6 +83,7 @@ const updateEntryById = async (entryId, userId, entryData) => {
     return {error: 500, message: 'db error'};
   }
 };
+
 const deleteEntryById = async (id, userId) => {
   try {
     const sql = 'DELETE FROM DiaryEntries WHERE entry_id=? AND user_id=?';
@@ -86,6 +99,7 @@ const deleteEntryById = async (id, userId) => {
     return {error: 500, message: 'db error'};
   }
 };
+
 export {
   listAllEntries,
   listAllEntriesByUserId,

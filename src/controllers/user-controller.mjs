@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import {
   deleteUserById,
   insertUser,
@@ -7,6 +8,12 @@ import {
 } from '../models/user-model.mjs';
 import {customError} from '../middlewares/error-handler.mjs';
 
+/**
+ * Get all users
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ * @param {function} next - next function
+ */
 const getUsers = async (req, res, next) => {
   const result = await listAllUsers();
   if (result.error) {
@@ -33,7 +40,7 @@ const postUser = async (req, res, next) => {
       email,
       password: hashedPassword,
     },
-    next
+    next,
   );
   return res.status(201).json(result);
 };
@@ -60,17 +67,20 @@ const putUser = async (req, res, next) => {
 };
 
 const deleteUser = async (req, res, next) => {
-  try {
-    // Check user's authorization here if needed
-    const result = await deleteUserById(req.params.id);
-    if (result.error) {
-      return next(customError(result, result.error));
-    }
-    return res.json(result);
-  } catch (error) {
-    console.error('Error deleting user: ', error);
-    return next(customError('Internal server error', 500));
+  // console.log('deleteUser', req.user, req.params.id);
+  // admin user can delete any user
+  // user authenticated by token can delete itself
+  if (
+    req.user.user_level !== 'admin' &&
+    req.user.user_id !== parseInt(req.params.id)
+  ) {
+    return next(customError('Unauthorized', 401));
   }
+  const result = await deleteUserById(req.params.id);
+  if (result.error) {
+    return next(customError(result, result.error));
+  }
+  return res.json(result);
 };
 
 export {getUsers, getUserById, postUser, putUser, deleteUser};

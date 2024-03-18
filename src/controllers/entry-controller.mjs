@@ -1,3 +1,4 @@
+import {customError} from '../middlewares/error-handler.mjs';
 import {
   findEntryById,
   addEntry,
@@ -54,4 +55,5 @@ const deleteEntry = async (req, res, next) => {
   }
   return res.json(result);
 };
+
 export {getEntries, getEntryById, postEntry, putEntry, deleteEntry};

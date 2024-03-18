@@ -11,6 +11,7 @@ const listAllUsers = async () => {
     return {error: 500, message: 'db error'};
   }
 };
+
 const selectUserById = async (id) => {
   try {
     const sql = 'SELECT * FROM Users WHERE user_id=?';
@@ -29,6 +30,7 @@ const selectUserById = async (id) => {
     return {error: 500, message: 'db error'};
   }
 };
+
 const insertUser = async (user, next) => {
   try {
     const sql =
@@ -60,6 +62,7 @@ const updateUserById = async (user) => {
     return {error: 500, message: 'db error'};
   }
 };
+
 const deleteUserById = async (id) => {
   try {
     const sql = 'DELETE FROM Users WHERE user_id=?';

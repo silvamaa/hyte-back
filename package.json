@@ -12,7 +12,7 @@
   },
   "apidoc": {
     "title": "My API docs",
-    "url": "https://example.com/api/v1",
+    "url": "https://hyte-server.northeurope.cloudapp.azure.com/docs",
     "order": [
       "Authentication",
       "User"

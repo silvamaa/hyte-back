@@ -1,12 +1,9 @@
-import {customError} from '../middlewares/error-handler.mjs';
-import {
-  findEntryById,
-  addEntry,
-  deleteEntryById,
-  updateEntryById,
-  listAllEntriesByUserId,
-} from '../models/entry-model.mjs';
-
+/**
+ * Returns a list of all entries for the currently authenticated user
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ * @param {Function} next - The next middleware function in the route's middleware chain
+ */
 const getEntries = async (req, res, next) => {
   // return only logged in user's own entries
   // - get user's id from token (req.user.user_id)
@@ -18,6 +15,12 @@ const getEntries = async (req, res, next) => {
   }
 };
 
+/**
+ * Returns a single entry for the currently authenticated user based on the provided entry ID
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ * @param {Function} next - The next middleware function in the route's middleware chain
+ */
 const getEntryById = async (req, res, next) => {
   const entry = await findEntryById(req.params.id, req.user.user_id);
   if (entry) {
@@ -27,6 +30,12 @@ const getEntryById = async (req, res, next) => {
   }
 };
 
+/**
+ * Adds a new entry for the currently authenticated user
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ * @param {Function} next - The next middleware function in the route's middleware chain
+ */
 const postEntry = async (req, res, next) => {
   const userId = req.user.user_id;
   const result = await addEntry(req.body, userId);
@@ -38,6 +47,12 @@ const postEntry = async (req, res, next) => {
   }
 };
 
+/**
+ * Updates an existing entry for the currently authenticated user
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ * @param {Function} next - The next middleware function in the route's middleware chain
+ */
 const putEntry = async (req, res, next) => {
   const entryId = req.params.id;
   const userId = req.user.user_id;
@@ -48,6 +63,12 @@ const putEntry = async (req, res, next) => {
   return res.status(201).json(result);
 };
 
+/**
+ * Deletes an entry for the currently authenticated user
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ * @param {Function} next - The next middleware function in the route's middleware chain
+ */
 const deleteEntry = async (req, res, next) => {
   const result = await deleteEntryById(req.params.id, req.user.user_id);
   if (result.error) {

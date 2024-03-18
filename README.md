@@ -112,8 +112,8 @@ Authorization: Bearer <token>
 [Vital Track](https://hyte-server.northeurope.cloudapp.azure.com)
 
 ### Git
-[Front End](https://github.com/silvamaa/vite/tree/porjekti/vite-project)
-[Back End](https://github.com/silvamaa/hyte-back/tree/projekti)
+- [Front End](https://github.com/silvamaa/vite/tree/porjekti/vite-project)
+- [Back End](https://github.com/silvamaa/hyte-back/tree/projekti)
 
 <!--  -->
 

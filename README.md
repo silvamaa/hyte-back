@@ -33,6 +33,22 @@ Didn't successfully get Apidoc working. Overall documentation can be found in th
 
 ## Endpoints
 
+### Home
+
+Login
+```
+POST http://localhost:3000/api/auth/login
+content-type: application/json
+```
+
+Create user
+```
+POST http://localhost:3000/api/users/login
+content-type: application/json
+```
+
+---
+
 ### Mood Form
 
 ### `/api/entries`

@@ -1,7 +1,5 @@
 import bcrypt from 'bcryptjs';
 
-const bcrypt = require('bcrypt');
-
 // Function to generate hashed password
 async function generateHashedPassword(password) {
     try {

@@ -40,7 +40,7 @@ const postUser = async (req, res, next) => {
       email,
       password: hashedPassword,
     },
-    next,
+    next
   );
   return res.status(201).json(result);
 };
@@ -70,10 +70,7 @@ const deleteUser = async (req, res, next) => {
   // console.log('deleteUser', req.user, req.params.id);
   // admin user can delete any user
   // user authenticated by token can delete itself
-  if (
-    req.user.user_level !== 'regular' &&
-    req.user.user_id !== 1(req.params.id)
-  ) {
+  if (req.user.user_level !== 'admin') {
     return next(customError('Unauthorized', 401));
   }
   const result = await deleteUserById(req.params.id);

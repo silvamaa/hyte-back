@@ -124,7 +124,7 @@ Authorization: Bearer <token>
 
 <!--  -->
 
-## Bug / Problems
+## Bugs / Problems
 
 - Logout button visuals.
 - About us full of not correct info since it was made mainly for visuals.

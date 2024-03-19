@@ -1,5 +1,7 @@
 DROP DATABASE IF EXISTS VitalTrack;
+
 CREATE DATABASE VitalTrack;
+
 USE VitalTrack;
 
 -- Create a table for users
@@ -22,3 +24,7 @@ CREATE TABLE DiaryEntries (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
+
+-- Test user
+INSERT INTO Users (username, password, email, user_level)
+VALUES ('soni', 'soninkarva', 'soni@gmail.com', 'admin');

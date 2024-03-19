@@ -27,4 +27,4 @@ CREATE TABLE DiaryEntries (
 
 -- Test user
 INSERT INTO Users (username, password, email, user_level)
-VALUES ('soni', 'soninkarva', 'soni@gmail.com', 'admin');
+VALUES ('soni', 'password', 'soni@gmail.com', 'admin');
